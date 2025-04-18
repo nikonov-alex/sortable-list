@@ -1,4 +1,5 @@
 import { Constructs, Types } from "@nikonov-alex/functional-library";
+import * as events from "node:events";
 const local = Constructs.local;
 
 
@@ -79,10 +80,12 @@ const makeRender = <I, S extends State<I>>(
 
 type InsideItem = HTMLElement & { InsideItem: null };
 type InsideItemButton = InsideItem & { InsideItemButton: null };
+type ItemActionEvent = Event & { target: InsideItemButton };
+
 type ItemButton = InsideItem & { ItemAction: null };
 
-const isItemAction = ( elem: HTMLElement ): elem is InsideItemButton =>
-    elem.matches( ".item-action, .item-action *" );
+const isItemAction = ( event: Event ): event is ItemActionEvent =>
+    (event.target as HTMLElement).matches( ".item-action, .item-action *" );
 
 const getItemButton = ( elem: InsideItemButton ): ItemButton =>
     elem.closest( ".item-action" ) as ItemButton;
@@ -108,8 +111,8 @@ const getItemsList = ( elem: InsideItem | ItemElem ): NodeListOf<ItemElem> =>
 
 
 
-const itemAction = <I,>( state: State<I>, clicked: InsideItemButton ): State<I> =>
-    local( getItemButton( clicked ), button =>
+const itemAction = <I,>( state: State<I>, event: ItemActionEvent ): State<I> =>
+    local( getItemButton( event.target ), button =>
     local( getAction( button ), action =>
         "remove" === action
             ? confirm( "Are you sure?" )
@@ -125,11 +128,9 @@ const itemAction = <I,>( state: State<I>, clicked: InsideItemButton ): State<I> 
     ));
 
 const maybeItemAction = <I,>( state: State<I>, event: Event ): State<I> =>
-    local( event.target as HTMLElement, clicked =>
-        isItemAction( clicked )
-            ? itemAction( state, clicked )
-            : state
-    );
+    isItemAction( event )
+        ? itemAction( state, event )
+        : state
 
 
 export {
