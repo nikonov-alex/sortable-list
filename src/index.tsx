@@ -1,5 +1,4 @@
 import { Constructs, Types } from "@nikonov-alex/functional-library";
-import * as events from "node:events";
 const local = Constructs.local;
 
 
@@ -136,8 +135,15 @@ const maybeItemAction = <I,>( state: State<I>, event: Event ): State<I> =>
         : state
 
 
+
+
+const make = <I,>( items: I[] ): State<I> =>
+    items;
+
+
 export {
     State,
+    make,
     makeRender,
     addItem,
     maybeItemAction,
