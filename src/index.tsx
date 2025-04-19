@@ -67,11 +67,14 @@ const makeRender = <I, S extends State<I>>(
 ): { (s: S): HTMLElement } =>
     ( state: S ): HTMLElement =>
         <div className="list">
-            <ul className="items" style={ ITEMS_STYLES }>
-                { state.map( item => <li className="item" style={ ITEM_STYLES }>
-                    { displayItem( item, ITEM_BUTTONS.cloneNode( true ) as HTMLElement ) }
-                </li> ) }
-            </ul>
+            { state.length > 0
+                ? <ul className="items" style={ ITEMS_STYLES }>
+                    { state.map( item => <li className="item" style={ ITEM_STYLES }>
+                        { displayItem( item, ITEM_BUTTONS.cloneNode( true ) as HTMLElement ) }
+                    </li> ) }
+                </ul>
+                : null
+            }
         </div> as HTMLElement;
 
 
