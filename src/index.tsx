@@ -61,15 +61,21 @@ const moveDownItem = <I,>( state: State<I>, index: number ): Types.Maybe<State<I
 
 
 
-const makeRender = <I, S extends State<I>>(
-    displayItem: { ( item: I, buttons: HTMLElement ): HTMLElement }
-): { (s: S): HTMLElement } =>
+const makeRender = <I, S extends State<I>>( options: {
+    displayItem: { ( item: I, buttons: HTMLElement ): HTMLElement },
+    classes?: {
+        list?: string
+        item?: string
+    }
+} ): { (s: S): HTMLElement } =>
     ( state: S ): HTMLElement =>
         <div className="list">
             { state.length > 0
-                ? <ul className="items" style={ ITEMS_STYLES }>
-                    { state.map( item => <li className="item" style={ ITEM_STYLES }>
-                        { displayItem( item, ITEM_BUTTONS.cloneNode( true ) as HTMLElement ) }
+                ? <ul className={ "items " + ( options.classes?.list ? options.classes?.list : "" ) }
+                      style={ ITEMS_STYLES }>
+                    { state.map( item => <li className={ "item " + ( options.classes?.list ? options.classes?.item : "" ) }
+                                                style={ ITEM_STYLES }>
+                        { options.displayItem( item, ITEM_BUTTONS.cloneNode( true ) as HTMLElement ) }
                     </li> ) }
                 </ul>
                 : null
@@ -137,7 +143,7 @@ const maybeItemAction = <I,>( state: State<I>, event: Event ): State<I> =>
 
 
 
-const make = <I,>( items: I[] ): State<I> =>
+const make = <I,>( items: I[] = [] ): State<I> =>
     items;
 
 
