@@ -66,7 +66,8 @@ const makeRender = <I, S extends State<I>>( options: {
     classes?: {
         list?: string
         item?: string
-    }
+    },
+    displayButtons?: HTMLElement
 } ): { (s: S): HTMLElement } =>
     ( state: S ): HTMLElement =>
         <div className="list">
@@ -75,7 +76,13 @@ const makeRender = <I, S extends State<I>>( options: {
                       style={ ITEMS_STYLES }>
                     { state.map( item => <li className={ "item " + ( options.classes?.list ? options.classes?.item : "" ) }
                                                 style={ ITEM_STYLES }>
-                        { options.displayItem( item, ITEM_BUTTONS.cloneNode( true ) as HTMLElement ) }
+                        { options.displayItem(
+                            item,
+                            ( options.displayButtons
+                                ? options.displayButtons
+                                : ITEM_BUTTONS
+                            ).cloneNode( true ) as HTMLElement
+                        ) }
                     </li> ) }
                 </ul>
                 : null
