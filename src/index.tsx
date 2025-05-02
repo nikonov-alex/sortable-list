@@ -65,8 +65,15 @@ const moveDownItem = <I,>( state: State<I>, index: ItemIndex ): Types.Maybe<Stat
 
 
 
+
+const formatItem = ( elem: HTMLLIElement ): HTMLLIElement =>
+    <li className={ "item " + elem.className }
+        style={ ITEM_STYLES }>
+        { elem.childNodes }
+    </li> as HTMLLIElement;
+
 export const render = <I, S extends State<I>>( state: S, options: {
-    displayItem: { ( item: I, buttons: HTMLElement ): HTMLElement },
+    displayItem: { ( item: I, buttons: HTMLElement ): HTMLLIElement },
     classes?: {
         list?: string
         item?: string
@@ -77,16 +84,15 @@ export const render = <I, S extends State<I>>( state: S, options: {
         { state.length > 0
             ? <ul className={ "items " + ( options.classes?.list ? options.classes?.list : "" ) }
                   style={ ITEMS_STYLES }>
-                { state.map( item => <li className={ "item " + ( options.classes?.list ? options.classes?.item : "" ) }
-                                         style={ ITEM_STYLES }>
-                    { options.displayItem(
+                { state.map( item => formatItem(
+                    options.displayItem(
                         item,
                         ( options.displayButtons
                                 ? options.displayButtons
                                 : ITEM_BUTTONS
                         ).cloneNode( true ) as HTMLElement
-                    ) }
-                </li> ) }
+                    )
+                )) }
             </ul>
             : null
         }
