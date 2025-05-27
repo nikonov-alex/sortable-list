@@ -1,6 +1,6 @@
 {
   "name": "@nikonov-alex/sortable-list",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "List based on @nikonov-alex/reactor library",
   "main": "build/index.js",
   "types": "src/index.ts",

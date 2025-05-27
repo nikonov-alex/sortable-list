@@ -66,8 +66,8 @@ const moveDownItem = <I,>( state: State<I>, index: ItemIndex ): Types.Maybe<Stat
 
 
 
-const formatItem = ( elem: HTMLLIElement ): HTMLLIElement =>
-    <li className={ "item " + elem.className }
+const formatItem = ( elem: HTMLLIElement, classes?: string ): HTMLLIElement =>
+    <li className={ "item " + elem.className + " " + ( classes ?? "" ) }
         style={ ITEM_STYLES }>
         { elem.childNodes }
     </li> as HTMLLIElement;
@@ -91,7 +91,8 @@ export const render = <I, S extends State<I>>( state: S, options: {
                                 ? options.displayButtons
                                 : ITEM_BUTTONS
                         ).cloneNode( true ) as HTMLElement
-                    )
+                    ),
+                    options.classes?.item
                 )) }
             </ul>
             : null
