@@ -119,7 +119,7 @@ export const isItemEvent = ( event: Event ): event is ItemEvent =>
 export const getItemButton = ( elem: InsideItemButton ): ItemButton =>
     elem.closest( ".item-action" ) as ItemButton;
 
-const getAction = ( action: ItemButton ): "remove" | "move-up" | "move-down" =>
+export const getAction = ( action: ItemButton ): "remove" | "move-up" | "move-down" =>
     action.classList.contains( "remove-button" )
         ? "remove"
         : action.classList.contains( "move-up" )
