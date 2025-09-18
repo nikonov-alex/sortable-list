@@ -122,4 +122,5 @@ function make<I extends Item>(
     }, options?.reactorArgs ?? { } ) );
 }
 
-export { make, State, Item, Options, Action, DisplayFunc, DisplayItemFunc, DisplayContentFunc, DisplayActionFunc, LIST_STYLES, helpers };
+import * as _Actions from "./actions";
+export { make, State, Item, Options, Action, DisplayFunc, DisplayItemFunc, DisplayContentFunc, DisplayActionFunc, LIST_STYLES, helpers, _Actions as Actions };

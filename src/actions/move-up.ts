@@ -1,4 +1,4 @@
-import { Action, Item, State } from "@widgets/list";
+import { Action, Item, State } from "../.";
 import { Constructs, Types } from "@nikonov-alex/functional-library";
 import { JSX } from "jsx-dom";
 const local = Constructs.local;

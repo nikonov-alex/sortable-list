@@ -1,4 +1,4 @@
-import { Action, Item, State } from "@widgets/list";
+import { Action, Item, State } from "../.";
 import { JSX } from "jsx-dom";
 
 const remove = <I extends Item>( state: State<I>, index: number ): State<I> =>
