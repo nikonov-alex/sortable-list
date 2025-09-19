@@ -113,7 +113,7 @@ function make<I extends Item>(
     return Reactor.make( merge( { }, {
         initialState: items,
         display,
-        events: options?.onItemClick
+        events: options?.actions && options.actions.length || options?.onItemClick
             ? { click: {
                 handler: onClick,
                 options: { capture: false }
