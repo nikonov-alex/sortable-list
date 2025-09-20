@@ -37,9 +37,11 @@ const Actions = <I extends Item>( actions: Action<I>[] ) =>
 
 
 
+type ActionFunc<I extends Item> = { ( state: State<I>, item: I, index: number, event: Event ): State<I> | [State<I>, Event] };
+
 type Action<I extends Item> = {
     button: JSX.Element,
-    action: { ( state: State<I>, item: I, index: number, event: Event ): State<I> | [State<I>, Event] }
+    action: ActionFunc<I>
 }
 
 type DisplayFunc<I extends Item> = { ( state: State<I> ): JSX.Element };
@@ -123,4 +125,5 @@ function make<I extends Item>(
 }
 
 import * as _Actions from "./actions";
-export { make, State, Item, Options, Action, DisplayFunc, DisplayItemFunc, DisplayContentFunc, DisplayActionFunc, LIST_STYLES, helpers, _Actions as Actions };
+export { make, State, Item, Options, Action, DisplayFunc, DisplayItemFunc, DisplayContentFunc, DisplayActionFunc,
+    LIST_STYLES, helpers, _Actions as Actions, ActionFunc };
