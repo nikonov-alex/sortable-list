@@ -15,16 +15,13 @@ const moveDown = <I extends Item>( state: State<I>, index: number ): Types.Maybe
                     : item
         );
 
-const wrapper = <I extends Item>( state: State<I>, item: I, index: number ) =>
+const action = <I extends Item>( state: State<I>, item: I, index: number ) =>
     local( moveDown( state, index ), newState =>
         !newState
             ? (alert( "Error!" ), state)
         : newState );
 
 const make = <I extends Item>( button: JSX.Element ): Action<I> =>
-    ( {
-        button,
-        action: wrapper
-    } );
+    ( { button, action } );
 
-export { make };
+export { make, action };
